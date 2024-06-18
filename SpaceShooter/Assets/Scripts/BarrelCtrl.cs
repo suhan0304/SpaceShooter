@@ -47,10 +47,10 @@ public class BarrelCtrl : MonoBehaviour
     }
 
     void IndirectDamage(Vector3 pos) {
-        ColliderErrorState2D[] colls = Physics.OverlapSphere(pos, radius, 1 << 3);
+        Collider[] colls = Physics.OverlapSphere(pos, radius, 1 << 3);
 
         foreach (Collider coll in colls) {
-            rb.coll.GetComponent<Rigidbody>();
+            rb = coll.GetComponent<Rigidbody>();
 
             rb.mass = 1.0f;
 
