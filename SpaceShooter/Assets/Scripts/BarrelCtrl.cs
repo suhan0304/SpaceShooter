@@ -46,8 +46,11 @@ public class BarrelCtrl : MonoBehaviour
         Destroy(gameObject, 3.0f);
     }
 
+    //Collider[] colls = new Collider[10];
     void IndirectDamage(Vector3 pos) {
-        Collider[] colls = Physics.OverlapSphere(pos, radius, 1 << 3);
+        Collider[] colls = Physics.OverlapSphere(pos, radius, 1 << 3); //Garbage Collection
+        
+        //Physics.OverlapSphereNonAlloc(pos, radius, colls, 1 << 3);
 
         foreach (Collider coll in colls) {
             rb = coll.GetComponent<Rigidbody>();
