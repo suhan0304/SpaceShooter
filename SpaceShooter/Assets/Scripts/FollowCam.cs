@@ -8,13 +8,13 @@ public class FollowCam : MonoBehaviour
     private Transform camTr;
 
     [Range(2.0f, 20.0f)]
-    public float distance = 10.0f;
+    public float distance = 2.0f;
 
     [Range(0.0f, 10.0f)]
-    public float height = 2.0f;
+    public float height = 3.0f;
 
     // 반응 속도
-    public float damping = 10.0f;
+    public float damping = 1.0f;
     public float targetOffset = 2.0f;
     private Vector3 velocity = Vector3.zero;
 
