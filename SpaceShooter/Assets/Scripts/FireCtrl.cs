@@ -15,7 +15,7 @@ public class FireCtrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButtonDown(0)) {
             Fire();
         }
     }
