@@ -5,7 +5,7 @@ using UnityEngine;
 public class RemoveBullet : MonoBehaviour
 {
     void OnCollisionEnter(Collision coll) {
-         if (coll.collider.tag == "BULLET") {
+         if (coll.collider.CompareTag("BULLET")) {
             Destroy(coll.gameObject);
          }       
     }
