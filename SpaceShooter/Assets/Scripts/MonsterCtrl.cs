@@ -34,7 +34,7 @@ public class MonsterCtrl : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 
-        bloodEffect = Resources.Load<GameObject>("BloodSpayEffect");
+        bloodEffect = Resources.Load<GameObject>("BloodSprayEffect");
 
         StartCoroutine(CheckMonsterState());
         StartCoroutine(MonsterAction());

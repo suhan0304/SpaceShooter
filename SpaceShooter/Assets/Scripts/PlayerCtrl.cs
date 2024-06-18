@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,13 @@ public class PlayerCtrl : MonoBehaviour
     public float moveSpeed = 10f;
     public float turnSpeed = 80f;
     
+    private readonly float initHP = 100.0f;
+    public float currHP;
     
     IEnumerator Start()
     {
+        currHP = initHP;
+
         tr = GetComponent<Transform>();
         anim = GetComponent<Animation>();
 
@@ -54,5 +59,20 @@ public class PlayerCtrl : MonoBehaviour
         else {
             anim.CrossFade("Idle", 0.25f);
         }
+    }
+    
+    void OnTriggerEnter(Collider coll) {
+        if (currHP >= 0.0f && coll.CompareTag("PUNCH")) {
+            currHP -= 10.0f;
+            Debug.Log($"Plater hp = {currHP/initHP}");
+
+            if (currHP < 0.0f) {
+                PlayerDie();
+            }
+        }
+    }
+
+    void PlayerDie() {
+        Debug.Log("Player Die !");
     }
 }
