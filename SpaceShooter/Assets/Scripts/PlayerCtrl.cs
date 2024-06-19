@@ -12,7 +12,7 @@ public class PlayerCtrl : MonoBehaviour
     public float moveSpeed = 10f;
     public float turnSpeed = 80f;
     
-    private readonly float initHP = 100.0f;
+    private readonly float initHP = 1000.0f;
     public float currHP;
     private Image hpBar;
 

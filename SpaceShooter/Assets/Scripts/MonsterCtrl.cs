@@ -47,9 +47,21 @@ public class MonsterCtrl : MonoBehaviour
         monsterTr = GetComponent<Transform>();
         playerTr = GameObject.FindWithTag("PLAYER").GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+
         anim = GetComponent<Animator>();
 
         bloodEffect = Resources.Load<GameObject>("BloodSprayEffect");
+    }
+
+    void Update() {
+        if (agent.remainingDistance >= 2.0f) {
+            Vector3 direction = agent.desiredVelocity;
+
+            Quaternion rot = Quaternion.LookRotation(direction);
+
+            monsterTr.rotation = Quaternion.Slerp(monsterTr.rotation, rot, Time.deltaTime * 10.0f);
+        }
     }
 
     IEnumerator CheckMonsterState() {
