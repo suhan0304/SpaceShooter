@@ -35,30 +35,30 @@ public class MonsterCtrl : MonoBehaviour
 
     void OnEnable() {
         PlayerCtrl.OnPlayerDie += this.OnPlayerDie;
+        
+        StartCoroutine(CheckMonsterState());
+        StartCoroutine(MonsterAction());
     }
     void OnDisable() {
         PlayerCtrl.OnPlayerDie -= this.OnPlayerDie;
     }
 
-    void Start() {
+    void Awake() {
         monsterTr = GetComponent<Transform>();
         playerTr = GameObject.FindWithTag("PLAYER").GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 
         bloodEffect = Resources.Load<GameObject>("BloodSprayEffect");
-
-        StartCoroutine(CheckMonsterState());
-        StartCoroutine(MonsterAction());
     }
 
     IEnumerator CheckMonsterState() {
         while(!isDie) {
             yield return new WaitForSeconds(0.3f);
 
-            float distance = Vector3.Distance(playerTr.position, monsterTr.position);
-
             if (state == State.DIE) yield break;
+
+            float distance = Vector3.Distance(playerTr.position, monsterTr.position);
 
             if (distance <= attackDist) {
                 state = State.ATTACK;
@@ -93,6 +93,16 @@ public class MonsterCtrl : MonoBehaviour
                     agent.isStopped = true;
                     anim.SetTrigger(hashDie);
                     GetComponent<CapsuleCollider>().enabled = false;
+                    
+                    yield return new WaitForSeconds(3.0f);
+
+                    hp = 100;
+                    isDie = false;
+
+                    GetComponent<CapsuleCollider>().enabled = true;
+                    this.gameObject.SetActive(false);
+                    state = State.IDLE;
+
                     break;
             }  
             yield return new WaitForSeconds(0.3f);
@@ -102,19 +112,21 @@ public class MonsterCtrl : MonoBehaviour
     void OnCollisionEnter(Collision coll) {
         if (coll.collider.CompareTag("BULLET")) {
             Destroy(coll.gameObject);
-            anim.SetTrigger(hashHit);
-
-            Vector3 pos = coll.GetContact(0).point;
-
-            Quaternion rot = Quaternion.LookRotation(-coll.GetContact(0).normal);
-
-            ShowBloodEffect(pos, rot);
-
-            hp -= 10;
-            if (hp <= 0) {
-                state = State.DIE;
-            }
         }
+    }
+    public void OnDamage(Vector3 pos, Vector3 normal) {
+        anim.SetTrigger(hashHit);
+
+        Quaternion rot = Quaternion.LookRotation(normal);
+
+        ShowBloodEffect(pos, rot);
+
+        hp -= 30;
+        if (hp <= 0) {
+            state = State.DIE;
+            GameManager.instance.DisplayScore(50);
+        }
+
     }
 
     void ShowBloodEffect(Vector3 pos, Quaternion rot) {
