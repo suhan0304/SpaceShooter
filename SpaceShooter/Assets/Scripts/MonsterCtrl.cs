@@ -25,6 +25,7 @@ public class MonsterCtrl : MonoBehaviour
     private readonly int hashTrace = Animator.StringToHash("IsTrace");
     private readonly int hashAttack = Animator.StringToHash("IsAttack");
     private readonly int hashHit = Animator.StringToHash("Hit");
+    private readonly int hashPlayerDie = Animator.StringToHash("PlayerDie");
 
     private GameObject bloodEffect;
 
@@ -108,5 +109,12 @@ public class MonsterCtrl : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackDist);
         }
+    }
+
+    void OnPlayerDie() {
+        StopAllCoroutines();
+
+        agent.isStopped = true;
+        anim.SetTrigger(hashPlayerDie);
     }
 }
