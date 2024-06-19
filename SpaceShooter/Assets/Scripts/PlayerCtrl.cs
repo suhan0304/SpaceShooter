@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCtrl : MonoBehaviour
 {
@@ -13,13 +14,15 @@ public class PlayerCtrl : MonoBehaviour
     
     private readonly float initHP = 100.0f;
     public float currHP;
-
+    private Image hpBar;
 
     public delegate void PlayerDieHandler();
     public static event PlayerDieHandler OnPlayerDie;
-    
+
     IEnumerator Start()
     {
+        hpBar = GameObject.FindGameObjectWithTag("HP_BAR")?.GetComponent<Image>();
+
         currHP = initHP;
 
         tr = GetComponent<Transform>();
@@ -68,6 +71,8 @@ public class PlayerCtrl : MonoBehaviour
     void OnTriggerEnter(Collider coll) {
         if (currHP >= 0.0f && coll.CompareTag("PUNCH")) {
             currHP -= 10.0f;
+            DisplayHealth();
+
             Debug.Log($"Plater hp = {currHP/initHP}");
 
             if (currHP < 0.0f) {
@@ -88,5 +93,9 @@ public class PlayerCtrl : MonoBehaviour
         */
 
         OnPlayerDie();
+    }
+
+    void DisplayHealth() {
+        hpBar.fillAmount = currHP/initHP;
     }
 }
