@@ -73,7 +73,7 @@ public class PlayerCtrl : MonoBehaviour
             currHP -= 10.0f;
             DisplayHealth();
 
-            Debug.Log($"Plater hp = {currHP/initHP}");
+            Debug.Log($"Player hp = {currHP/initHP}");
 
             if (currHP < 0.0f) {
                 PlayerDie();

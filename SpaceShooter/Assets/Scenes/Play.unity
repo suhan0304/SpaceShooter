@@ -905,6 +905,7 @@ MonoBehaviour:
   monster: {fileID: 2186867125919986014, guid: 2aa24b50ace29754ab5c4d2a78fe61d0, type: 3}
   createTime: 3
   isGameOver: 0
+  scoreText: {fileID: 878736723}
 --- !u!4 &549224302
 Transform:
   m_ObjectHideFlags: 0
@@ -1251,14 +1252,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20.6
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1733,7 +1734,7 @@ GameObject:
   - component: {fileID: 1043915192}
   - component: {fileID: 1043915191}
   m_Layer: 5
-  m_Name: Panel - Hpbar_1
+  m_Name: Panel - Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

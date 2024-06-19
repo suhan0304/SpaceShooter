@@ -114,6 +114,7 @@ public class MonsterCtrl : MonoBehaviour
             Destroy(coll.gameObject);
         }
     }
+    
     public void OnDamage(Vector3 pos, Vector3 normal) {
         anim.SetTrigger(hashHit);
 
