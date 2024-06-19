@@ -26,6 +26,7 @@ public class MonsterCtrl : MonoBehaviour
     private readonly int hashAttack = Animator.StringToHash("IsAttack");
     private readonly int hashHit = Animator.StringToHash("Hit");
     private readonly int hashPlayerDie = Animator.StringToHash("PlayerDie");
+    private readonly int hashSpeed = Animator.StringToHash("Speed");
 
     private GameObject bloodEffect;
 
@@ -115,6 +116,7 @@ public class MonsterCtrl : MonoBehaviour
         StopAllCoroutines();
 
         agent.isStopped = true;
+        anim.SetFloat(hashSpeed, Random.Range(0.8f, 1.2f));
         anim.SetTrigger(hashPlayerDie);
     }
 }
