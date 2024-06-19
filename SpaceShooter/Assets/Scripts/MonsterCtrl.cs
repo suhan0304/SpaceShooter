@@ -27,8 +27,18 @@ public class MonsterCtrl : MonoBehaviour
     private readonly int hashHit = Animator.StringToHash("Hit");
     private readonly int hashPlayerDie = Animator.StringToHash("PlayerDie");
     private readonly int hashSpeed = Animator.StringToHash("Speed");
+    private readonly int hashDie = Animator.StringToHash("Die");
 
     private GameObject bloodEffect;
+
+    private int hp = 100;
+
+    void OnEnable() {
+        PlayerCtrl.OnPlayerDie += this.OnPlayerDie;
+    }
+    void OnDisable() {
+        PlayerCtrl.OnPlayerDie -= this.OnPlayerDie;
+    }
 
     void Start() {
         monsterTr = GetComponent<Transform>();
@@ -47,6 +57,8 @@ public class MonsterCtrl : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
 
             float distance = Vector3.Distance(playerTr.position, monsterTr.position);
+
+            if (state == State.DIE) yield break;
 
             if (distance <= attackDist) {
                 state = State.ATTACK;
@@ -77,6 +89,10 @@ public class MonsterCtrl : MonoBehaviour
                     anim.SetBool(hashAttack, true);
                     break;
                 case State.DIE :
+                    isDie = true;
+                    agent.isStopped = true;
+                    anim.SetTrigger(hashDie);
+                    GetComponent<CapsuleCollider>().enabled = false;
                     break;
             }  
             yield return new WaitForSeconds(0.3f);
@@ -93,6 +109,11 @@ public class MonsterCtrl : MonoBehaviour
             Quaternion rot = Quaternion.LookRotation(-coll.GetContact(0).normal);
 
             ShowBloodEffect(pos, rot);
+
+            hp -= 10;
+            if (hp <= 0) {
+                state = State.DIE;
+            }
         }
     }
 
