@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerCtrlByEvent : MonoBehaviour
@@ -33,12 +32,17 @@ public class PlayerCtrlByEvent : MonoBehaviour
             moveDir = Vector3.zero;
             anim.SetFloat("Movement", 0.0f);
         };
-        moveAction = new InputAction("Attack", InputActionType.Button, "<Keyboard>/space");
+
+        moveAction.Enable();
+
+        attackAction = new InputAction("Attack", InputActionType.Button, "<Keyboard>/space");
 
         attackAction.performed += ctx => {
             Debug.Log("Attack by c# event");
             anim.SetTrigger("Attack");
         };
+
+        attackAction.Enable();
     }
 
     void Update() {
