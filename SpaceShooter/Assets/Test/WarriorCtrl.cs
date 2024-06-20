@@ -22,7 +22,7 @@ public class WarriorCtrl : MonoBehaviour
         mainActionMap = playerInput.actions.FindActionMap("PlayerActions");
 
         moveAction = mainActionMap.FindAction("Move");
-        moveAction = mainActionMap.FindAction("Attack");
+        attackAction = mainActionMap.FindAction("Attack");
 
         moveAction.performed += ctx => {
             Vector2 dir = ctx.ReadValue<Vector2>();
