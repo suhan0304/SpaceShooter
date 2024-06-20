@@ -72,7 +72,7 @@
                 {
                     "name": "right",
                     "id": "43bbd4c6-5586-4d1d-a2a4-5865208b0aa0",
-                    "path": "<Keyboard>/delete",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

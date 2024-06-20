@@ -9,9 +9,35 @@ public class WarriorCtrl : MonoBehaviour
     private new Transform transform;
     private Vector3 moveDir;
 
+    private PlayerInput playerInput;
+    private InputActionMap mainActionMap;
+    private InputAction moveAction;
+    private InputAction attackAction;
+
     void Start() {
         anim = GetComponent<Animator>();
         transform = GetComponent<Transform>();
+        playerInput = GetComponent<PlayerInput>();
+
+        mainActionMap = playerInput.actions.FindActionMap("PlayerActions");
+
+        moveAction = mainActionMap.FindAction("Move");
+        moveAction = mainActionMap.FindAction("Attack");
+
+        moveAction.performed += ctx => {
+            Vector2 dir = ctx.ReadValue<Vector2>();
+            moveDir = new Vector3(dir.x, 0, dir.y);
+            anim.SetFloat("Movement", dir.magnitude);
+        };
+        moveAction.canceled += ctx => {
+            moveDir = Vector3.zero;
+            anim.SetFloat("Movement", 0.0f);
+        };
+
+        attackAction.performed += ctx => {
+            Debug.Log("Attack by c# event");
+            anim.SetTrigger("Attack");
+        };
     }
 
     void Update() {
